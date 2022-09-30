@@ -1,0 +1,16 @@
+{
+  "extends": "@sindresorhus/tsconfig",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "module": "CommonJS",
+    "target": "ESNext",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "src"
+  ]
+}
