@@ -5,7 +5,7 @@ import { render } from "ink"
 import * as system from "./system"
 import { program } from "commander"
 import { App } from "./App"
-import { SWRConfig } from "swr"
+import { AppProvider } from "./providers/AppProvider"
 
 const { apiToken } = program
 	.option("--api-token <token>", "TodoIst api token")
@@ -15,11 +15,7 @@ const { apiToken } = program
 system.start(apiToken)
 
 render(
-	<SWRConfig
-		value={{
-			refreshInterval: 5 * 60 * 1000,
-		}}
-	>
+	<AppProvider>
 		<App />
-	</SWRConfig>,
+	</AppProvider>,
 )

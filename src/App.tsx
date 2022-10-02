@@ -1,13 +1,19 @@
 import React, { useEffect } from "react"
-import { Box, useInput, useStdout } from "ink"
+import { Box, useApp, useInput, useStdout } from "ink"
 import { ProjectList } from "./components/ProjectList/index"
+import { TaskList } from "./components/TaskList/index"
+import { HintBar } from "./components/HintBar/index"
+import { Container } from "./components/Container/index"
+import useStdoutDimensions from "ink-use-stdout-dimensions"
 
 export const App: React.FC = () => {
-	const { stdout, write } = useStdout()
+	const { exit } = useApp()
+	const { write } = useStdout()
+	const [_, rows] = useStdoutDimensions()
 
 	useInput((input, _key) => {
 		if (input === "q") {
-			process.exit(0)
+			exit()
 		}
 	})
 
@@ -23,11 +29,20 @@ export const App: React.FC = () => {
 	}, [write])
 
 	return (
-		<Box height={stdout && stdout.rows - 1} flexDirection="row">
-			<Box width="50%" borderStyle="single">
-				<ProjectList />
+		<Box height={rows - 1} flexDirection="column">
+			<Box flexGrow={1} flexDirection="row">
+				<Box width="20%">
+					<Container screen="projects">
+						<ProjectList />
+					</Container>
+				</Box>
+				<Box width="80%">
+					<Container screen="tasks">
+						<TaskList />
+					</Container>
+				</Box>
 			</Box>
-			<Box width="50%" borderStyle="single"></Box>
+			<HintBar />
 		</Box>
 	)
 }
